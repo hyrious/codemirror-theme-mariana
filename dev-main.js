@@ -1,18 +1,42 @@
 "use strict";
 (() => {
+  var __create = Object.create;
+  var __defProp = Object.defineProperty;
+  var __getOwnPropDesc = Object.getOwnPropertyDescriptor;
+  var __getOwnPropNames = Object.getOwnPropertyNames;
+  var __getProtoOf = Object.getPrototypeOf;
+  var __hasOwnProp = Object.prototype.hasOwnProperty;
   var __require = /* @__PURE__ */ ((x) => typeof require !== "undefined" ? require : typeof Proxy !== "undefined" ? new Proxy(x, {
     get: (a2, b) => (typeof require !== "undefined" ? require : a2)[b]
   }) : x)(function(x) {
     if (typeof require !== "undefined") return require.apply(this, arguments);
     throw Error('Dynamic require of "' + x + '" is not supported');
   });
+  var __copyProps = (to, from, except, desc) => {
+    if (from && typeof from === "object" || typeof from === "function") {
+      for (let key of __getOwnPropNames(from))
+        if (!__hasOwnProp.call(to, key) && key !== except)
+          __defProp(to, key, { get: () => from[key], enumerable: !(desc = __getOwnPropDesc(from, key)) || desc.enumerable });
+    }
+    return to;
+  };
+  var __toESM = (mod, isNodeMode, target) => (target = mod != null ? __create(__getProtoOf(mod)) : {}, __copyProps(
+    // If the importer is in node compatibility mode or this is not an ESM
+    // file that has been converted to a CommonJS file using a Babel-
+    // compatible transform (i.e. "__esModule" has not been set), then set
+    // "default" to the CommonJS "module.exports" for node compatibility.
+    isNodeMode || !mod || !mod.__esModule ? __defProp(target, "default", { value: mod, enumerable: true }) : target,
+    mod
+  ));
 
   // src/dev-main.ts
   var import_codemirror = __require("codemirror");
+  var import_state = __require("@codemirror/state");
   var import_view2 = __require("@codemirror/view");
   var import_lang_javascript = __require("@codemirror/lang-javascript");
   var import_language2 = __require("@codemirror/language");
   var import_highlight2 = __require("@lezer/highlight");
+  var import_language3 = __require("@codemirror/language");
 
   // node_modules/crelt/index.js
   function crelt() {
@@ -225,25 +249,211 @@
     { tag: [import_highlight.tags.comment, import_highlight.tags.separator, import_highlight.tags.derefOperator], color: blue6 },
     { tag: [import_highlight.tags.string], color: green },
     { tag: [import_highlight.tags.function(import_highlight.tags.name), import_highlight.tags.typeName], color: blue },
-    { tag: [import_highlight.tags.definition(import_highlight.tags.propertyName), import_highlight.tags.function(import_highlight.tags.definition(import_highlight.tags.variableName))], color: blue5 },
+    { tag: [import_highlight.tags.angleBracket, import_highlight.tags.definition(import_highlight.tags.propertyName), import_highlight.tags.function(import_highlight.tags.definition(import_highlight.tags.variableName))], color: blue5 },
     { tag: [import_highlight.tags.number, import_highlight.tags.definition(import_highlight.tags.className)], color: orange },
-    { tag: [import_highlight.tags.self, import_highlight.tags.constant(import_highlight.tags.name), import_highlight.tags.definitionOperator, import_highlight.tags.arithmeticOperator, import_highlight.tags.compareOperator, import_highlight.tags.logicOperator], color: red },
-    { tag: [import_highlight.tags.keyword, import_highlight.tags.escape, import_highlight.tags.function(import_highlight.tags.punctuation)], color: pink },
+    { tag: [import_highlight.tags.self, import_highlight.tags.bool, import_highlight.tags.constant(import_highlight.tags.name), import_highlight.tags.tagName, import_highlight.tags.operator], color: red },
+    { tag: [import_highlight.tags.keyword, import_highlight.tags.escape, import_highlight.tags.function(import_highlight.tags.punctuation), import_highlight.tags.processingInstruction, import_highlight.tags.labelName, import_highlight.tags.attributeName, import_highlight.tags.className], color: pink },
     { tag: [import_highlight.tags.special(import_highlight.tags.brace)], color: white }
   ]);
   var mariana = [marianaTheme, (0, import_language.syntaxHighlighting)(marianaHighlightStyle)];
 
   // src/dev-main.ts
+  function sql(dialectName) {
+    return Promise.resolve().then(() => __toESM(__require("@codemirror/lang-sql"), 1)).then((m) => m.sql({ dialect: m[dialectName] }));
+  }
+  var languages = [
+    import_language3.LanguageDescription.of({
+      name: "C++",
+      alias: ["cpp"],
+      extensions: ["cpp", "c++", "cc", "cxx", "hpp", "h++", "hh", "hxx"],
+      load() {
+        return Promise.resolve().then(() => __toESM(__require("@codemirror/lang-cpp"), 1)).then((m) => m.cpp());
+      }
+    }),
+    import_language3.LanguageDescription.of({
+      name: "CSS",
+      extensions: ["css"],
+      load() {
+        return Promise.resolve().then(() => __toESM(__require("@codemirror/lang-css"), 1)).then((m) => m.css());
+      }
+    }),
+    import_language3.LanguageDescription.of({
+      name: "HTML",
+      alias: ["xhtml"],
+      extensions: ["html", "htm", "handlebars", "hbs"],
+      load() {
+        return Promise.resolve().then(() => __toESM(__require("@codemirror/lang-html"), 1)).then((m) => m.html());
+      }
+    }),
+    import_language3.LanguageDescription.of({
+      name: "Java",
+      extensions: ["java"],
+      load() {
+        return Promise.resolve().then(() => __toESM(__require("@codemirror/lang-java"), 1)).then((m) => m.java());
+      }
+    }),
+    import_language3.LanguageDescription.of({
+      name: "JavaScript",
+      alias: ["ecmascript", "js", "node"],
+      extensions: ["js", "mjs", "cjs"],
+      load() {
+        return Promise.resolve().then(() => __toESM(__require("@codemirror/lang-javascript"), 1)).then((m) => m.javascript());
+      }
+    }),
+    import_language3.LanguageDescription.of({
+      name: "JSON",
+      alias: ["json5"],
+      extensions: ["json", "map"],
+      load() {
+        return Promise.resolve().then(() => __toESM(__require("@codemirror/lang-json"), 1)).then((m) => m.json());
+      }
+    }),
+    import_language3.LanguageDescription.of({
+      name: "JSX",
+      extensions: ["jsx"],
+      load() {
+        return Promise.resolve().then(() => __toESM(__require("@codemirror/lang-javascript"), 1)).then((m) => m.javascript({ jsx: true }));
+      }
+    }),
+    import_language3.LanguageDescription.of({
+      name: "LESS",
+      extensions: ["less"],
+      load() {
+        return Promise.resolve().then(() => __toESM(__require("@codemirror/lang-less"), 1)).then((m) => m.less());
+      }
+    }),
+    import_language3.LanguageDescription.of({
+      name: "Liquid",
+      extensions: ["liquid"],
+      load() {
+        return Promise.resolve().then(() => __toESM(__require("@codemirror/lang-liquid"), 1)).then((m) => m.liquid());
+      }
+    }),
+    import_language3.LanguageDescription.of({
+      name: "Markdown",
+      extensions: ["md", "markdown", "mkd"],
+      load() {
+        return Promise.resolve().then(() => __toESM(__require("@codemirror/lang-markdown"), 1)).then((m) => m.markdown());
+      }
+    }),
+    import_language3.LanguageDescription.of({
+      name: "PHP",
+      extensions: ["php", "php3", "php4", "php5", "php7", "phtml"],
+      load() {
+        return Promise.resolve().then(() => __toESM(__require("@codemirror/lang-php"), 1)).then((m) => m.php());
+      }
+    }),
+    import_language3.LanguageDescription.of({
+      name: "Python",
+      extensions: ["BUILD", "bzl", "py", "pyw"],
+      filename: /^(BUCK|BUILD)$/,
+      load() {
+        return Promise.resolve().then(() => __toESM(__require("@codemirror/lang-python"), 1)).then((m) => m.python());
+      }
+    }),
+    import_language3.LanguageDescription.of({
+      name: "Rust",
+      extensions: ["rs"],
+      load() {
+        return Promise.resolve().then(() => __toESM(__require("@codemirror/lang-rust"), 1)).then((m) => m.rust());
+      }
+    }),
+    import_language3.LanguageDescription.of({
+      name: "Sass",
+      extensions: ["sass"],
+      load() {
+        return Promise.resolve().then(() => __toESM(__require("@codemirror/lang-sass"), 1)).then((m) => m.sass({ indented: true }));
+      }
+    }),
+    import_language3.LanguageDescription.of({
+      name: "SCSS",
+      extensions: ["scss"],
+      load() {
+        return Promise.resolve().then(() => __toESM(__require("@codemirror/lang-sass"), 1)).then((m) => m.sass());
+      }
+    }),
+    import_language3.LanguageDescription.of({
+      name: "SQL",
+      extensions: ["sql"],
+      load() {
+        return sql("StandardSQL");
+      }
+    }),
+    import_language3.LanguageDescription.of({
+      name: "SQLite",
+      load() {
+        return sql("SQLite");
+      }
+    }),
+    import_language3.LanguageDescription.of({
+      name: "TSX",
+      extensions: ["tsx"],
+      load() {
+        return Promise.resolve().then(() => __toESM(__require("@codemirror/lang-javascript"), 1)).then((m) => m.javascript({ jsx: true, typescript: true }));
+      }
+    }),
+    import_language3.LanguageDescription.of({
+      name: "TypeScript",
+      alias: ["ts"],
+      extensions: ["ts", "mts", "cts"],
+      load() {
+        return Promise.resolve().then(() => __toESM(__require("@codemirror/lang-javascript"), 1)).then((m) => m.javascript({ typescript: true }));
+      }
+    }),
+    import_language3.LanguageDescription.of({
+      name: "WebAssembly",
+      extensions: ["wat", "wast"],
+      load() {
+        return Promise.resolve().then(() => __toESM(__require("@codemirror/lang-wast"), 1)).then((m) => m.wast());
+      }
+    }),
+    import_language3.LanguageDescription.of({
+      name: "XML",
+      alias: ["rss", "wsdl", "xsd"],
+      extensions: ["xml", "xsl", "xsd", "svg"],
+      load() {
+        return Promise.resolve().then(() => __toESM(__require("@codemirror/lang-xml"), 1)).then((m) => m.xml());
+      }
+    })
+  ];
   document.body.style.background = color.bg;
+  var lang = sessionStorage.getItem("lang") ?? "TypeScript";
   var doc = sessionStorage.getItem("doc") ?? `const a = 1;
 function hello(who = "world") {
   console.log(\`Hello, \${who}!\`)
 }`;
+  var language = new import_state.Compartment();
   globalThis.view = new import_codemirror.EditorView({
     doc,
     extensions: [
       import_codemirror.basicSetup,
-      (0, import_lang_javascript.javascript)({ typescript: true }),
+      import_view2.showPanel.of((view) => {
+        let dom = crelt(
+          "div",
+          { class: "settings" },
+          crelt("label", { for: "lang" }, "Language: "),
+          crelt(
+            "select",
+            { id: "lang" },
+            ...languages.map((e) => crelt("option", {}, e.name))
+          )
+        );
+        let select = dom.querySelector("select");
+        select.value = lang;
+        select.onchange = async () => {
+          let found = import_language3.LanguageDescription.matchLanguageName(languages, select.value, true);
+          if (found) {
+            let support = await found.load();
+            view.dispatch({
+              effects: language.reconfigure(support.extension)
+            });
+            sessionStorage.setItem("lang", select.value);
+          }
+        };
+        select.dispatchEvent(new InputEvent("change", { bubbles: true }));
+        return { dom, top: true };
+      }),
+      language.of([]),
       import_lang_javascript.javascriptLanguage.data.of({
         autocomplete: (0, import_lang_javascript.scopeCompletionSource)(globalThis)
       }),
