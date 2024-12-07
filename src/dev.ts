@@ -20,6 +20,8 @@ var require = function (mod) {
 };
 `
 
+let build = process.argv.includes('build')
+
 let ctx = await context({
   entryPoints: ['src/codemirror.js', 'src/dev-main.ts'],
   bundle: true,
@@ -37,13 +39,23 @@ let ctx = await context({
   outdir: 'dist',
   packages: 'external',
   alias: {
-    crelt: './node_modules/crelt/index.js',
-    culori: './node_modules/culori/bundled/culori.mjs'
+    crelt: './node_modules/crelt/index.js'
   },
-  write: false,
+  write: build,
   logLevel: 'info'
 })
 
-await ctx.serve({
-  servedir: '.'
-})
+if (build) {
+  await ctx.rebuild()
+  await ctx.dispose()
+
+  let entry = fs.readFileSync('index.html', 'utf8')
+  entry = entry.replaceAll('/dist/', '')
+  fs.writeFileSync('dist/index.html', entry)
+}
+
+else {
+  await ctx.serve({
+    servedir: '.'
+  })
+}

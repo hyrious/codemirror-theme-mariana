@@ -1,0 +1,28 @@
+name: github pages
+
+on:
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: write
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    concurrency:
+      group: ${{ github.workflow }}-${{ github.ref }}
+      cancel-in-progress: true
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "lts/*"
+          cache: npm
+      - run: |
+          npm ci
+          npm run demo
+      - uses: JamesIves/github-pages-deploy-action@v4
+        with:
+          folder: dist

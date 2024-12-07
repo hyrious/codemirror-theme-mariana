@@ -20,6 +20,7 @@
   ],
   "scripts": {
     "dev": "esbuild-dev src/dev.ts",
+    "demo": "esbuild-dev src/dev.ts build",
     "build": "esbuild-dev src/build.ts && dts src/mariana.ts"
   },
   "dependencies": {
