@@ -205,10 +205,10 @@ export const marianaHighlightStyle = HighlightStyle.define([
   {tag: [t.comment, t.separator, t.derefOperator], color: blue6},
   {tag: [t.string], color: green},
   {tag: [t.function(t.name), t.typeName], color: blue},
-  {tag: [t.definition(t.propertyName), t.function(t.definition(t.variableName))], color: blue5},
+  {tag: [t.angleBracket, t.definition(t.propertyName), t.function(t.definition(t.variableName))], color: blue5},
   {tag: [t.number, t.definition(t.className)], color: orange},
-  {tag: [t.self, t.constant(t.name), t.definitionOperator, t.arithmeticOperator, t.compareOperator, t.logicOperator], color: red},
-  {tag: [t.keyword, t.escape, t.function(t.punctuation)], color: pink},
+  {tag: [t.self, t.bool, t.constant(t.name), t.tagName, t.operator], color: red},
+  {tag: [t.keyword, t.escape, t.function(t.punctuation), t.processingInstruction, t.labelName, t.attributeName, t.className], color: pink},
   {tag: [t.special(t.brace)], color: white}
 ])
 

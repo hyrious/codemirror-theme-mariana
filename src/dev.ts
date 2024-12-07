@@ -41,6 +41,9 @@ let ctx = await context({
   alias: {
     crelt: './node_modules/crelt/index.js'
   },
+  supported: {
+    'dynamic-import': false
+  },
   write: build,
   logLevel: 'info'
 })
