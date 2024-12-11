@@ -23,7 +23,7 @@ var require = function (mod) {
 let build = process.argv.includes('build')
 
 let ctx = await context({
-  entryPoints: ['src/codemirror.js', 'src/dev-main.ts'],
+  entryPoints: ['src/codemirror.js', 'src/dev-main.ts', 'src/dev-main.css'],
   bundle: true,
   plugins: [{
     name: 'cm',
@@ -38,12 +38,16 @@ let ctx = await context({
   }],
   outdir: 'dist',
   packages: 'external',
+  loader: {
+    '.ttf': 'file'
+  },
   alias: {
     crelt: './node_modules/crelt/index.js'
   },
   supported: {
     'dynamic-import': false
   },
+  assetNames: '[name]',
   write: build,
   logLevel: 'info'
 })

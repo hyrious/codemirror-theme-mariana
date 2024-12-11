@@ -1,9 +1,13 @@
-import {basicSetup, EditorView} from 'codemirror'
-import {Compartment} from '@codemirror/state'
-import {showPanel, ViewPlugin, ViewUpdate} from '@codemirror/view'
+import {EditorView} from 'codemirror'
+import {Compartment, EditorState} from '@codemirror/state'
+import {history, defaultKeymap, historyKeymap} from '@codemirror/commands';
+import {crosshairCursor, drawSelection, dropCursor, highlightActiveLine, highlightActiveLineGutter, highlightSpecialChars, keymap, lineNumbers, rectangularSelection, showPanel, ViewPlugin, ViewUpdate} from '@codemirror/view'
+import {highlightSelectionMatches, searchKeymap} from '@codemirror/search';
+import {closeBrackets, autocompletion, closeBracketsKeymap, completionKeymap} from '@codemirror/autocomplete';
+import {lintKeymap} from '@codemirror/lint';
 import {javascriptLanguage, scopeCompletionSource} from '@codemirror/lang-javascript'
 import {markdownLanguage} from '@codemirror/lang-markdown'
-import {syntaxTree} from '@codemirror/language'
+import {bracketMatching, defaultHighlightStyle, foldGutter, foldKeymap, indentOnInput, syntaxHighlighting, syntaxTree} from '@codemirror/language'
 import {getStyleTags} from '@lezer/highlight'
 import {SyntaxNode} from '@lezer/common'
 import {LanguageDescription} from '@codemirror/language'
@@ -183,7 +187,35 @@ const language = new Compartment()
 globalThis.view = new EditorView({
   doc,
   extensions: [
-    basicSetup,
+    lineNumbers(),
+    highlightActiveLineGutter(),
+    highlightSpecialChars(),
+    history(),
+    foldGutter({
+      openText: '\u{eab4}',
+      closedText: '\u{eab6}',
+    }),
+    drawSelection(),
+    dropCursor(),
+    EditorState.allowMultipleSelections.of(true),
+    indentOnInput(),
+    syntaxHighlighting(defaultHighlightStyle, { fallback: true }),
+    bracketMatching(),
+    closeBrackets(),
+    autocompletion(),
+    rectangularSelection(),
+    crosshairCursor(),
+    highlightActiveLine(),
+    highlightSelectionMatches(),
+    keymap.of([
+        ...closeBracketsKeymap,
+        ...defaultKeymap,
+        ...searchKeymap,
+        ...historyKeymap,
+        ...foldKeymap,
+        ...completionKeymap,
+        ...lintKeymap
+    ]),
     showPanel.of(view => {
       let dom = h('div', { class: 'settings' },
         h('label', { for: 'lang' }, 'Language: '),
