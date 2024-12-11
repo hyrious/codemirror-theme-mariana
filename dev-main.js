@@ -72,9 +72,6 @@
     }
   }
 
-  // src/dev-main.ts
-  var import_codicons = __require("@vscode/codicons");
-
   // src/mariana.ts
   var import_view = __require("@codemirror/view");
   var import_language = __require("@codemirror/language");
