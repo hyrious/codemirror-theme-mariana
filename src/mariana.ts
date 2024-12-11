@@ -136,6 +136,7 @@ export const marianaTheme = EditorView.theme({
 
   ".cm-searchMatch": {
     outline: `${color.highlight} solid 1px`,
+    borderRadius: '2px',
     backgroundColor: 'transparent'
   },
   ".cm-searchMatch.cm-searchMatch-selected": {
@@ -148,6 +149,7 @@ export const marianaTheme = EditorView.theme({
   },
   ".cm-selectionMatch": {
     outline: `${color.highlight} solid 1px`,
+    borderRadius: '2px',
     backgroundColor: 'transparent'
   },
 
