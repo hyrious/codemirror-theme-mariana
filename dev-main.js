@@ -209,9 +209,6 @@
       backgroundColor: "transparent",
       borderBottom: `1px solid ${color.bracketsForeground}`
     },
-    ".cm-gutterElement": {
-      width: "10px"
-    },
     ".cm-gutters": {
       backgroundColor: color.background,
       color: a(color.foreground, 0.5),
