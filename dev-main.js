@@ -32,7 +32,11 @@
   // src/dev-main.ts
   var import_codemirror = __require("codemirror");
   var import_state = __require("@codemirror/state");
+  var import_commands = __require("@codemirror/commands");
   var import_view2 = __require("@codemirror/view");
+  var import_search = __require("@codemirror/search");
+  var import_autocomplete = __require("@codemirror/autocomplete");
+  var import_lint = __require("@codemirror/lint");
   var import_lang_javascript = __require("@codemirror/lang-javascript");
   var import_lang_markdown = __require("@codemirror/lang-markdown");
   var import_language2 = __require("@codemirror/language");
@@ -67,6 +71,9 @@
       throw new RangeError("Unsupported child node: " + child);
     }
   }
+
+  // src/dev-main.ts
+  var import_codicons = __require("@vscode/codicons");
 
   // src/mariana.ts
   var import_view = __require("@codemirror/view");
@@ -434,7 +441,35 @@ function hello(who = "world") {
   globalThis.view = new import_codemirror.EditorView({
     doc,
     extensions: [
-      import_codemirror.basicSetup,
+      (0, import_view2.lineNumbers)(),
+      (0, import_view2.highlightActiveLineGutter)(),
+      (0, import_view2.highlightSpecialChars)(),
+      (0, import_commands.history)(),
+      (0, import_language2.foldGutter)({
+        openText: "\uEAB4",
+        closedText: "\uEAB6"
+      }),
+      (0, import_view2.drawSelection)(),
+      (0, import_view2.dropCursor)(),
+      import_state.EditorState.allowMultipleSelections.of(true),
+      (0, import_language2.indentOnInput)(),
+      (0, import_language2.syntaxHighlighting)(import_language2.defaultHighlightStyle, { fallback: true }),
+      (0, import_language2.bracketMatching)(),
+      (0, import_autocomplete.closeBrackets)(),
+      (0, import_autocomplete.autocompletion)(),
+      (0, import_view2.rectangularSelection)(),
+      (0, import_view2.crosshairCursor)(),
+      (0, import_view2.highlightActiveLine)(),
+      (0, import_search.highlightSelectionMatches)(),
+      import_view2.keymap.of([
+        ...import_autocomplete.closeBracketsKeymap,
+        ...import_commands.defaultKeymap,
+        ...import_search.searchKeymap,
+        ...import_commands.historyKeymap,
+        ...import_language2.foldKeymap,
+        ...import_autocomplete.completionKeymap,
+        ...import_lint.lintKeymap
+      ]),
       import_view2.showPanel.of((view) => {
         let dom = crelt(
           "div",
