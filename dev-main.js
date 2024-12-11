@@ -188,6 +188,7 @@
     },
     ".cm-searchMatch": {
       outline: `${color.highlight} solid 1px`,
+      borderRadius: "2px",
       backgroundColor: "transparent"
     },
     ".cm-searchMatch.cm-searchMatch-selected": {
@@ -200,6 +201,7 @@
     },
     ".cm-selectionMatch": {
       outline: `${color.highlight} solid 1px`,
+      borderRadius: "2px",
       backgroundColor: "transparent"
     },
     "&.cm-focused .cm-matchingBracket, &.cm-focused .cm-nonmatchingBracket": {
