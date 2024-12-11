@@ -1,7 +1,8 @@
 import {basicSetup, EditorView} from 'codemirror'
 import {Compartment} from '@codemirror/state'
 import {showPanel, ViewPlugin, ViewUpdate} from '@codemirror/view'
-import {javascript, javascriptLanguage, scopeCompletionSource} from '@codemirror/lang-javascript'
+import {javascriptLanguage, scopeCompletionSource} from '@codemirror/lang-javascript'
+import {markdownLanguage} from '@codemirror/lang-markdown'
 import {syntaxTree} from '@codemirror/language'
 import {getStyleTags} from '@lezer/highlight'
 import {SyntaxNode} from '@lezer/common'
@@ -85,7 +86,10 @@ const languages = [
     name: "Markdown",
     extensions: ["md", "markdown", "mkd"],
     load() {
-      return import("@codemirror/lang-markdown").then(m => m.markdown())
+      return import("@codemirror/lang-markdown").then(m => m.markdown({
+        codeLanguages: languages,
+        base: markdownLanguage,
+      }))
     }
   }),
   LanguageDescription.of({
@@ -223,7 +227,7 @@ globalThis.view = new EditorView({
             let result = '(empty)'
             let tree = syntaxTree(update.state)
             let at = update.state.selection.main.anchor
-            let node = dfs(tree.resolve(at), at)
+            let node = dfs(tree.resolveInner(at), at)
             let code = update.state.sliceDoc(node.from, node.to)
             let rule = getStyleTags(node)
             if (rule) {

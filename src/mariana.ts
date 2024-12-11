@@ -207,11 +207,16 @@ export const marianaHighlightStyle = HighlightStyle.define([
   {tag: [t.comment, t.separator, t.derefOperator], color: blue6},
   {tag: [t.string], color: green},
   {tag: [t.function(t.name), t.typeName], color: blue},
-  {tag: [t.angleBracket, t.definition(t.propertyName), t.function(t.definition(t.variableName))], color: blue5},
+  {tag: [t.angleBracket, t.definition(t.propertyName), t.function(t.definition(t.variableName)), t.atom], color: blue5},
   {tag: [t.number, t.definition(t.className)], color: orange},
-  {tag: [t.self, t.bool, t.constant(t.name), t.tagName, t.operator], color: red},
-  {tag: [t.keyword, t.escape, t.function(t.punctuation), t.processingInstruction, t.labelName, t.attributeName, t.className], color: pink},
-  {tag: [t.special(t.brace)], color: white}
+  {tag: [t.self, t.bool, t.constant(t.name), t.special(t.name), t.tagName, t.operator], color: red},
+  {tag: [t.keyword, t.escape, t.function(t.punctuation), t.processingInstruction, t.labelName, t.attributeName, t.className, t.namespace], color: pink},
+  {tag: [t.special(t.brace)], color: white},
+  {tag: [t.macroName], color: blue, fontStyle: 'italic'},
+  {tag: [t.link, t.url], color: blue, textDecoration: 'underline'},
+  {tag: [t.heading, t.strong], fontWeight: 'bold'},
+  {tag: [t.emphasis], fontStyle: 'italic'},
+  {tag: [t.strikethrough], textDecoration: 'line-through'}
 ])
 
 /// Extension to enable the Mariana theme (both the editor theme and the highlight style).
