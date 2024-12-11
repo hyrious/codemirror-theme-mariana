@@ -34,6 +34,7 @@
   var import_state = __require("@codemirror/state");
   var import_view2 = __require("@codemirror/view");
   var import_lang_javascript = __require("@codemirror/lang-javascript");
+  var import_lang_markdown = __require("@codemirror/lang-markdown");
   var import_language2 = __require("@codemirror/language");
   var import_highlight2 = __require("@lezer/highlight");
   var import_language3 = __require("@codemirror/language");
@@ -251,11 +252,16 @@
     { tag: [import_highlight.tags.comment, import_highlight.tags.separator, import_highlight.tags.derefOperator], color: blue6 },
     { tag: [import_highlight.tags.string], color: green },
     { tag: [import_highlight.tags.function(import_highlight.tags.name), import_highlight.tags.typeName], color: blue },
-    { tag: [import_highlight.tags.angleBracket, import_highlight.tags.definition(import_highlight.tags.propertyName), import_highlight.tags.function(import_highlight.tags.definition(import_highlight.tags.variableName))], color: blue5 },
+    { tag: [import_highlight.tags.angleBracket, import_highlight.tags.definition(import_highlight.tags.propertyName), import_highlight.tags.function(import_highlight.tags.definition(import_highlight.tags.variableName)), import_highlight.tags.atom], color: blue5 },
     { tag: [import_highlight.tags.number, import_highlight.tags.definition(import_highlight.tags.className)], color: orange },
-    { tag: [import_highlight.tags.self, import_highlight.tags.bool, import_highlight.tags.constant(import_highlight.tags.name), import_highlight.tags.tagName, import_highlight.tags.operator], color: red },
-    { tag: [import_highlight.tags.keyword, import_highlight.tags.escape, import_highlight.tags.function(import_highlight.tags.punctuation), import_highlight.tags.processingInstruction, import_highlight.tags.labelName, import_highlight.tags.attributeName, import_highlight.tags.className], color: pink },
-    { tag: [import_highlight.tags.special(import_highlight.tags.brace)], color: white }
+    { tag: [import_highlight.tags.self, import_highlight.tags.bool, import_highlight.tags.constant(import_highlight.tags.name), import_highlight.tags.special(import_highlight.tags.name), import_highlight.tags.tagName, import_highlight.tags.operator], color: red },
+    { tag: [import_highlight.tags.keyword, import_highlight.tags.escape, import_highlight.tags.function(import_highlight.tags.punctuation), import_highlight.tags.processingInstruction, import_highlight.tags.labelName, import_highlight.tags.attributeName, import_highlight.tags.className, import_highlight.tags.namespace], color: pink },
+    { tag: [import_highlight.tags.special(import_highlight.tags.brace)], color: white },
+    { tag: [import_highlight.tags.macroName], color: blue, fontStyle: "italic" },
+    { tag: [import_highlight.tags.link, import_highlight.tags.url], color: blue, textDecoration: "underline" },
+    { tag: [import_highlight.tags.heading, import_highlight.tags.strong], fontWeight: "bold" },
+    { tag: [import_highlight.tags.emphasis], fontStyle: "italic" },
+    { tag: [import_highlight.tags.strikethrough], textDecoration: "line-through" }
   ]);
   var mariana = [marianaTheme, (0, import_language.syntaxHighlighting)(marianaHighlightStyle)];
 
@@ -335,7 +341,10 @@
       name: "Markdown",
       extensions: ["md", "markdown", "mkd"],
       load() {
-        return Promise.resolve().then(() => __toESM(__require("@codemirror/lang-markdown"), 1)).then((m) => m.markdown());
+        return Promise.resolve().then(() => __toESM(__require("@codemirror/lang-markdown"), 1)).then((m) => m.markdown({
+          codeLanguages: languages,
+          base: import_lang_markdown.markdownLanguage
+        }));
       }
     }),
     import_language3.LanguageDescription.of({
@@ -478,7 +487,7 @@ function hello(who = "world") {
               let result = "(empty)";
               let tree = (0, import_language2.syntaxTree)(update.state);
               let at = update.state.selection.main.anchor;
-              let node = dfs(tree.resolve(at), at);
+              let node = dfs(tree.resolveInner(at), at);
               let code = update.state.sliceDoc(node.from, node.to);
               let rule = (0, import_highlight2.getStyleTags)(node);
               if (rule) {
