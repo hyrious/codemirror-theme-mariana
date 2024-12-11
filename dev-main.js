@@ -252,7 +252,7 @@
     { tag: [import_highlight.tags.comment, import_highlight.tags.separator, import_highlight.tags.derefOperator], color: blue6 },
     { tag: [import_highlight.tags.string], color: green },
     { tag: [import_highlight.tags.function(import_highlight.tags.name), import_highlight.tags.typeName], color: blue },
-    { tag: [import_highlight.tags.angleBracket, import_highlight.tags.definition(import_highlight.tags.propertyName), import_highlight.tags.function(import_highlight.tags.definition(import_highlight.tags.variableName)), import_highlight.tags.atom], color: blue5 },
+    { tag: [import_highlight.tags.angleBracket, import_highlight.tags.definition(import_highlight.tags.propertyName), import_highlight.tags.function(import_highlight.tags.definition(import_highlight.tags.variableName))], color: blue5 },
     { tag: [import_highlight.tags.number, import_highlight.tags.definition(import_highlight.tags.className)], color: orange },
     { tag: [import_highlight.tags.self, import_highlight.tags.bool, import_highlight.tags.constant(import_highlight.tags.name), import_highlight.tags.special(import_highlight.tags.name), import_highlight.tags.tagName, import_highlight.tags.operator], color: red },
     { tag: [import_highlight.tags.keyword, import_highlight.tags.escape, import_highlight.tags.function(import_highlight.tags.punctuation), import_highlight.tags.processingInstruction, import_highlight.tags.labelName, import_highlight.tags.attributeName, import_highlight.tags.className, import_highlight.tags.namespace], color: pink },
