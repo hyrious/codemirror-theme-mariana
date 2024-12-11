@@ -9,14 +9,15 @@
   <style>
     html {
       height: 100%;
-      display: grid;
     }
     body {
       margin: 0;
-      display: grid;
+      height: 100%;
     }
     #editor {
-      display: grid;
+      height: 100%;
+      display: flex;
+      flex-flow: column nowrap;
     }
     .settings,
     .inspect {
@@ -26,6 +27,14 @@
     }
     .settings {
       text-align: right;
+    }
+    .cm-editor {
+      flex: 1;
+      display: flex;
+    }
+    .cm-scroller {
+      flex: 1;
+      scrollbar-width: none;
     }
   </style>
 </head>
