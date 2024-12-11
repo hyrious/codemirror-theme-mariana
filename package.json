@@ -1,7 +1,7 @@
 {
   "name": "@hyrious/codemirror-theme-mariana",
   "type": "module",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Mariana theme for the CodeMirror code editor",
   "author": "hyrious <hyrious@outlook.com>",
   "license": "MIT",
